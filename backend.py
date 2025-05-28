@@ -44,12 +44,12 @@ def debit(amt,acc_no):
     conn=connect_db()
     cursor = conn.cursor()
 
-    cursor.execute("SELECT balance FROM users WHERE accno=?",(acc_no,))
+    cursor.execute("SELECT balance FROM users WHERE acc_no=?",(acc_no,))
     balance = cursor.fetchone()
 
     if balance[0]>=amt:
         bal=balance[0]-amt
-        cursor.execute("UPDATE users SET balance=? WHERE accno=?",(bal,acc_no))
+        cursor.execute("UPDATE users SET balance=? WHERE acc_no=?",(bal,acc_no))
         conn.commit()
         conn.close()
         return {"current balance":bal}
@@ -61,20 +61,20 @@ def credit(amt,acc_no):
     amt=float(amt)
     conn=connect_db()
     cursor = conn.cursor()
-    cursor.execute("SELECT balance FROM users WHERE accno=?",(acc_no,))
+    cursor.execute("SELECT balance FROM users WHERE acc_no=?",(acc_no,))
     balance=cursor.fetchone()
     curr_ba=balance[0]+amt
-    cursor.execute("UPDATE users SET balance=? WHERE accno=?",(curr_ba,acc_no))
+    cursor.execute("UPDATE users SET balance=? WHERE acc_no=?",(curr_ba,acc_no))
     conn.commit()
     conn.close()
     return {"current balance":curr_ba}
 
 
 @app.get("/user/details")
-def show_user(acc_no):
+def show_user_details(acc_no):
     conn=connect_db()
     cursor=conn.cursor()
-    cursor.execute("SELECT * FROM users WHERE accno=?",(acc_no,))
+    cursor.execute("SELECT * FROM users WHERE acc_no=?",(acc_no,))
     data=cursor.fetchall()
     conn.close()
     return data

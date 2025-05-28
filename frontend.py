@@ -57,15 +57,15 @@ if st.session_state.action == "create":
 
 elif st.session_state.action == "credit":
     st.subheader("Credit Amount")
-    acc_no = st.text_input("Account Number")
-    amt = st.text_input("Amount")
+    acc_no = st.text_input("acc_no")
+    amt = st.text_input("amt")
 
     if st.button("Credit",key="credit_button"):
         if not acc_no or not amt:
             st.warning("Please enter account number and amount.")
         else:
             try:
-                res = requests.post("http://127.0.0.1:8000/user/credit", params={"accno": acc_no, "amt": float(amt)})
+                res = requests.post("http://127.0.0.1:8000/user/credit", params={"acc_no": acc_no, "amt": float(amt)})
                 if res.status_code == 200:
                     st.success(f"Amount credited. New balance: {res.json().get('current balance')}")
                 else:
@@ -76,8 +76,8 @@ elif st.session_state.action == "credit":
 
 elif st.session_state.action == "debit":
     st.subheader("Debit Amount")
-    acc_no = st.text_input("Account Number")
-    amt = st.text_input("Amount")
+    acc_no = st.text_input("acc_no")
+    amt = st.text_input("amt")
 
     if st.button("Debit",key="debit_button"):
         if not acc_no or not amt:
@@ -101,7 +101,7 @@ elif st.session_state.action == "transfer":
     st.subheader("Transfer Funds")
     f_acc = st.text_input("From Account")
     to_acc = st.text_input("To Account")
-    amt = st.text_input("Amount")
+    amt = st.text_input("amt")
 
     if st.button("Transfer",key="transfer_button"):
         if not all([f_acc, to_acc, amt]):
@@ -120,10 +120,10 @@ elif st.session_state.action == "transfer":
             except Exception as e:
                 st.error(f"Error: {e}")
 
-# --- Show User Details ---
+
 elif st.session_state.action == "details":
     st.subheader("User Details")
-    acc_no = st.text_input("Account Number")
+    acc_no = st.text_input("acc_no")
 
     if st.button("Show Details",key="details_button"):
         if not acc_no:
