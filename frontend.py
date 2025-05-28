@@ -148,3 +148,6 @@ elif st.session_state.action == "details":
 
 else:
     st.write("Select an operation from the sidebar to begin.")
+
+
+
